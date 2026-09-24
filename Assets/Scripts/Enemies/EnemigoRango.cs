@@ -2,19 +2,30 @@ using System;
 using UnityEngine;
 public class EnemigoRango : MonoBehaviour
 {
-    private int vida;
-    private int daño;
+    int vida;
+    int daño;
     private int balas = 5;
     private bool estaVivo;
     private bool yaImprimiMuerte;
     private int vecesQueRecibioDaño;
+    public EnemigoRango(int vida, int daño)//: base(vida, daño)
+    {
+        this.vida = vida;
+        this.daño = daño;
+        this.balas = 5;
+        this.estaVivo = true;
+        this.yaImprimiMuerte = false;
+        this.vecesQueRecibioDaño = 0;
+
+        Console.WriteLine("Se crea un enemigo rango con " + vida + " de vida y " + daño + " de daño");
+    }
 
     public void Disparar()
     {
-        if (balas > 0)
+        if (this.balas > 0)
         {
-            balas -= 1;
-            Console.WriteLine("El enemigo rango dispara y le quedan " + balas + " balas");
+            this.balas = this.balas - 1;
+            Console.WriteLine("El enemigo rango dispara y le quedan " + this.balas + " balas");
         }
         else
         {
@@ -24,7 +35,7 @@ public class EnemigoRango : MonoBehaviour
 
     public void RecibirDaño(int cantidad)
     {
-        vecesQueRecibioDaño = vecesQueRecibioDaño + 1;
+        this.vecesQueRecibioDaño = this.vecesQueRecibioDaño + 1;
 
         if (cantidad < 0)
         {
@@ -32,22 +43,22 @@ public class EnemigoRango : MonoBehaviour
             return;
         }
 
-        int vidaAntes = vida;
-        vida = vida - cantidad;
+        int vidaAntes = this.vida;
+        this.vida = this.vida - cantidad;
 
         Console.WriteLine("El enemigo rango recibe " + cantidad + " de daño");
         Console.WriteLine("Vida antes: " + vidaAntes);
-        Console.WriteLine("Vida ahora: " + vida);
+        Console.WriteLine("Vida ahora: " + this.vida);
 
-        if (vida <= 0)
+        if (this.vida <= 0)
         {
-            vida = 0;
-            estaVivo = false;
+            this.vida = 0;
+            this.estaVivo = false;
 
-            if (yaImprimiMuerte == false)
+            if (this.yaImprimiMuerte == false)
             {
                 Console.WriteLine("*** El enemigo rango ha muerto ***");
-                yaImprimiMuerte = true;
+                this.yaImprimiMuerte = true;
             }
             else
             {
@@ -56,7 +67,7 @@ public class EnemigoRango : MonoBehaviour
         }
         else
         {
-            Console.WriteLine("Al enemigo rango le quedan " + vida + " puntos de vida");
+            Console.WriteLine("Al enemigo rango le quedan " + this.vida + " puntos de vida");
         }
 
         Console.WriteLine("----------------------------------------");
@@ -70,11 +81,11 @@ public class EnemigoRango : MonoBehaviour
 
     public bool EstaVivo()
     {
-        if (vida > 0)
+        if (this.vida > 0)
         {
             return true;
         }
-        else if (vida == 0)
+        else if (this.vida == 0)
         {
             return false;
         }
@@ -83,14 +94,15 @@ public class EnemigoRango : MonoBehaviour
             return false;
         }
     }
+
     public void MostrarEstado()
     {
         Console.WriteLine("===== ESTADO DEL ENEMIGO RANGO =====");
-        Console.WriteLine("Vida: " + vida);
-        Console.WriteLine("Daño: " + daño);
-        Console.WriteLine("Balas: " + balas);
+        Console.WriteLine("Vida: " + this.vida);
+        Console.WriteLine("Daño: " + this.daño);
+        Console.WriteLine("Balas: " + this.balas);
 
-        if (estaVivo == true)
+        if (this.estaVivo == true)
         {
             Console.WriteLine("Estado: VIVO");
         }
@@ -99,6 +111,7 @@ public class EnemigoRango : MonoBehaviour
             Console.WriteLine("Estado: MUERTO");
         }
 
-        Console.WriteLine("Veces que ha recibido daño: " + vecesQueRecibioDaño);
+        Console.WriteLine("Veces que ha recibido daño: " + this.vecesQueRecibioDaño);
+        Console.WriteLine("=====================================");
     }
 }
